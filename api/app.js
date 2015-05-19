@@ -20,9 +20,10 @@ app.use( connectRoute( function routes( router ) {
   function postRequest( req, res, next ) {
     var userRequested = req.params.slug || req.body.slug;
     var user = users[ userRequested ];
+    res.statusCode = 200;
     if( !user ) {
       res.statusCode = 404;
-      user = '404 - Not found';
+      user = { error: '404 - Not found' };
     }
     res.setHeader( 'Content-Type', 'application/json' );
     res.end( JSON.stringify( user ) );

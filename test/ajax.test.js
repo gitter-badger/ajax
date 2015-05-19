@@ -1,39 +1,23 @@
-;(function ( root, factory ) {
-  'use strict';
-  /* istanbul ignore next */
-  if ( typeof define === 'function' && define.amd ) {
-    define([ 'chai.should', 'chai.expect', 'Ajax' ], factory );
-  }
-  else if ( typeof exports === 'object' ) {
-    exports = module.exports = factory(
-      require( 'chai' ).should(),
-      require( 'chai' ).expect,
-      require( '../src/ajax' )
-    );
-  }
-  else {
-    root.testAjax = factory( root.chai.should(), root.chai.expect, root.Ajax );
-  }
-})(this, function( should, expect, Ajax ) {
+;(function ( should, Ajax ) {
   'use strict';
 
   describe( '#AJAX - Test module interface', function() {
-    var ajax = new Ajax();
-
-    it( 'Should have `get` method', function() {
+    it( 'Should have `get`, `post`, `put` and `delete` methods', function() {
       ajax.should.have.property( 'get' );
-    });
-
-    it( 'Should have `post` method', function() {
       ajax.should.have.property( 'post' );
-    });
-
-    it( 'Should have `put` method', function() {
       ajax.should.have.property( 'put' );
-    });
-
-    it( 'Should have `delete` method', function() {
       ajax.should.have.property( 'delete' );
     });
+
+    it( 'Should methods have a promise `done`, `error` and `always`',
+    function() {
+      var methods = [ 'get', 'post', 'put', 'delete' ];
+      methods.forEach(function( method ) {
+        ajax[ method ]().should.have.property( 'done' );
+        ajax[ method ]().should.have.property( 'error' );
+        ajax[ method ]().should.have.property( 'always' );
+      });
+    });
+
   });
-});
+})( window.chai.should(), window.ajax );

@@ -2,7 +2,7 @@
   'use strict';
   /* istanbul ignore next */
   if ( typeof define === 'function' && define.amd ) {
-    define([ 'chai.should', 'chai.expect', 'Ajax' ], factory );
+    define([ 'chai.should', 'chai.expect', 'ajax' ], factory );
   }
   else if ( typeof exports === 'object' ) {
     exports = module.exports = factory(
@@ -12,13 +12,12 @@
     );
   }
   else {
-    root.testAjax = factory( root.chai.should(), root.chai.expect, root.Ajax );
+    root.testAjax = factory( root.chai.should(), root.chai.expect, root.ajax );
   }
-})(this, function( should, expect, Ajax ) {
+})(this, function( should, expect, ajax ) {
   'use strict';
 
   describe( '#AJAX - Test `delete` promises interface', function() {
-    var ajax = new Ajax();
     var deleteRequest = ajax.delete();
 
     it( 'Should `delete` method return `done` method', function() {

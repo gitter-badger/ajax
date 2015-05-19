@@ -2,13 +2,13 @@
   'use strict';
   /* istanbul ignore next */
   if ( typeof define === 'function' && define.amd ) {
-    define( 'Ajax', factory );
+    define( 'ajax', factory );
   }
   else if ( typeof exports === 'object' ) {
     exports = module.exports = factory();
   }
   else {
-    root.Ajax = factory();
+    root.ajax = factory();
   }
 })(this, function() {
   'use strict';
@@ -51,12 +51,14 @@
     $private.handleReadyStateChange = function handleReadyStateChange() {
       var xhr = this;
       var DONE = 4;
-      if( xhr.readyState === DONE ) {
-        $private.methods.always.apply( $private.methods, $private.parseResponse( xhr ) );
-        if( xhr.status >= 200 && xhr.status < 300 ) {
-          return $private.methods.done.apply( $private.methods, $private.parseResponse( xhr ) );
+      var STATUS_OK = xhr.status >= 200 && xhr.status < 300;
+      if( DONE === xhr.readyState ) {
+        if( STATUS_OK ) {
+          $private.methods.done.apply( $private.methods, $private.parseResponse( xhr ) );
+        } else {
+          $private.methods.error.apply( $private.methods, $private.parseResponse( xhr ) );
         }
-        $private.methods.error.apply( $private.methods, $private.parseResponse( xhr ) );
+        $private.methods.always.apply( $private.methods, $private.parseResponse( xhr ) );
       }
     };
 
@@ -102,5 +104,5 @@
     return $public;
   }
 
-  return Ajax;
+  return new Ajax();
 });

@@ -2,7 +2,7 @@
   'use strict';
   /* istanbul ignore next */
   if ( typeof define === 'function' && define.amd ) {
-    define([ 'chai.should', 'chai.expect', 'Ajax' ], factory );
+    define([ 'chai.should', 'chai.expect', 'ajax' ], factory );
   }
   else if ( typeof exports === 'object' ) {
     exports = module.exports = factory(
@@ -12,14 +12,12 @@
     );
   }
   else {
-    root.testAjax = factory( root.chai.should(), root.chai.expect, root.Ajax );
+    root.testAjax = factory( root.chai.should(), root.chai.expect, root.ajax );
   }
-})(this, function( should, expect, Ajax ) {
+})(this, function( should, expect, ajax ) {
   'use strict';
 
   describe( '#AJAX - Test `post` method', function() {
-    var ajax = new Ajax();
-
     it( 'Should return an object', function( done ) {
       ajax.post( 'http://127.0.0.1:3000/api/user/joao' ).done(function( response ) {
         response.should.be.an( 'object' );
@@ -38,7 +36,7 @@
       ajax.post( 'http://127.0.0.1:3000/api/user', { slug: 'alberto' }).error(function( response, xhr ) {
         xhr.status.should.be.equal( 404 );
         done();
-      })
+      });
     });
   });
 });

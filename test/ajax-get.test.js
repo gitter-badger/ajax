@@ -2,7 +2,7 @@
   'use strict';
   /* istanbul ignore next */
   if ( typeof define === 'function' && define.amd ) {
-    define([ 'chai.should', 'chai.expect', 'Ajax' ], factory );
+    define([ 'chai.should', 'chai.expect', 'ajax' ], factory );
   }
   else if ( typeof exports === 'object' ) {
     exports = module.exports = factory(
@@ -12,20 +12,15 @@
     );
   }
   else {
-    root.testAjax = factory( root.chai.should(), root.chai.expect, root.Ajax );
+    root.testAjax = factory( root.chai.should(), root.chai.expect, root.ajax );
   }
-})(this, function( should, expect, Ajax ) {
+})(this, function( should, expect, ajax ) {
   'use strict';
 
   describe( '#AJAX - Test `get` method', function() {
-    var ajax;
-    beforeEach(function() {
-      ajax = new Ajax();
-    });
-
     it( 'Should return an object (users list)', function( done ) {
       ajax.get( 'http://127.0.0.1:3000/api/users' ).done(function( response ) {
-        response.should.be.an( 'object' );
+        response.should.be.an.object;
         done();
       });
     });
